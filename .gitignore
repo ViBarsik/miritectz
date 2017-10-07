@@ -21,7 +21,6 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-/nodeJsServer/node_modules
 /runtime
 /vendor
 /log
