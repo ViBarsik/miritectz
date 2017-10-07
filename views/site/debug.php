@@ -8,6 +8,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <h1><?= Html::encode('Отладка приложения file_manager.php') ?></h1>
+<hr>
 
 <h2>Основная задача</h2>
 <div>
@@ -57,9 +58,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     Вывод: сколько файлов будет лежать наряду с исполняемым скриптом файлового менеджера, столько секунд (и плюс основное время выполнения )
     будет выполняться скрипт. Если количество файлов будет превышать количество секунд на отведенное время выполнения php скрипта, то
-    данный скрипт не сможет быть завершен и мы будем получать сообщение о разрыве соединения с сервером и прекращении выполнения скрипта типа.
+    данный скрипт не сможет быть завершен и мы будем получать сообщение о разрыве соединения с сервером и прекращении выполнения скрипта.
 
-    <table class='xdebug-trace' dir='ltr' border='1' cellspacing='0'>
+    <p></p>
+    <table style="width: 100%" class='xdebug-trace' dir='ltr' border='1' cellspacing='0'>
         <tr><th>#</th><th>Time</th><th>Mem</th><th colspan='2'>Function</th><th>Location</th></tr>
         <tr><td>0</td><td>0.015933</td><td align='right'>437664</td><td align='left'>-&gt;</td><td>{main}()</td><td>E:\SYSProgramFiles\OpenServer\domains\litvaphp\web\file_manager.php:0</td></tr>
         <tr><td>1</td><td>0.016053</td><td align='right'>437664</td><td align='left'>&nbsp; &nbsp;-&gt;</td><td>xdebug_start_trace()</td><td>E:\SYSProgramFiles\OpenServer\domains\litvaphp\web\file_manager.php:2</td></tr>
@@ -126,6 +128,4 @@ $this->params['breadcrumbs'][] = $this->title;
         <tr><td>62</td><td>12.043028</td><td align='right'>443800</td><td align='left'>&nbsp; &nbsp;-&gt;</td><td>print_r()</td><td>E:\SYSProgramFiles\OpenServer\domains\litvaphp\web\file_manager.php:4</td></tr>
         <tr><td>63</td><td>12.043158</td><td align='right'>441808</td><td align='left'>&nbsp; &nbsp;-&gt;</td><td>xdebug_stop_trace()</td><td>E:\SYSProgramFiles\OpenServer\domains\litvaphp\web\file_manager.php:6</td></tr>
     </table>
-
-
 </div>

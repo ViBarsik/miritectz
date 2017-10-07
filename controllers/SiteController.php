@@ -1,24 +1,29 @@
 <?php
 namespace app\controllers;
 
-use app\models\logic\LogicHandler;
 use Yii;
+use yii\web\Controller;
+use app\models\credit\CreditHandler;
+use app\models\install\Generator;
+use app\models\logic\LogicHandler;
 
-use app\models\user\UserHandler;
-
-class SiteController extends \yii\web\Controller
+class SiteController extends Controller
 {
+    public function beforeAction($action)
+    {
+        if(!isset(Yii::$app->params['isInstall']) && $this->action->id !== 'install'){
+            return $this->redirect('/install');
+        }
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex() {
         return $this->render('index');
     }
 
-    public function actionLogica() {
-        if(Yii::$app->request->isPost){
-            $this->refresh();
-        }
-        
+    public function actionLogica() {       
         $handler = new LogicHandler();
-
+        
         return $this->render('logic', $handler->getViewData());
     }
 
@@ -26,65 +31,34 @@ class SiteController extends \yii\web\Controller
         return $this->render('debug');
     }
 
-    public function actionTask() {
-        return $this->render('task');
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    public function actionRegistration() {
-        $UserHandler = new UserHandler();
-        $User = $UserHandler->getUser('create');
-
-        if(Yii::$app->request->isPost && $UserHandler->registration()){
-            return $this->redirect('/login');
-        }
-
-        return $this->render('registration', [
-            'User' => $User,
-        ]);
+    public function actionTask() {        
+        $handler = new CreditHandler();
+        
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax){
+            $Credit = $handler->createNewCredit();
+            if($Credit->hasErrors()){
+                return $this->renderPartial('credit/form',['Credit' => $Credit]);
+            }            
+            return $this->renderPartial('credit/table',['Credit' => $Credit]);
+        } 
+        
+        return $this->render('credit/credit',['Credit' => $handler->getCreditObject('create')]);
     }
 
-    public function actionLogin() {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+
+    public function actionInstall() {
+        $this->layout = 'install';
+        if(isset(Yii::$app->params['isInstall'])){
+            return $this->redirect('/');
         }
 
-        $UserHandler = new UserHandler();
-        $User = $UserHandler->getUser('login');
+        try{
+            Generator::createTables();
+            Generator::updateConfig();
 
-        if(Yii::$app->request->isPost && $UserHandler->login()){
-            return $this->goBack();
+            return $this->redirect('/');
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
-
-        return $this->render('login', ['User' => $User,]);
-    }
-
-    public function actionLogout() {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('registration', [
-            'model' => $model,
-        ]);
     }
 }

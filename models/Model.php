@@ -9,7 +9,7 @@ class Model extends \yii\base\Model
         $scenario = $this->scenario;
         $names = $this->scenarios()[$scenario] ?? null;
         return parent::getAttributes($names, $except);
-    }
+    }    
 
     public function findByCondition(array $fields) {
         $params = [];
@@ -39,5 +39,11 @@ class Model extends \yii\base\Model
         $this->attributes = $attributes;
 
         return $this;
+    }
+
+    public static function createObject(string $scenario = 'default', array $attributes = []) {
+        $Object = new static ($attributes);
+        $Object->scenario = $scenario;
+        return $Object;
     }
 }

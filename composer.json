@@ -36,6 +36,12 @@
     "scripts": {
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"
+        ],
+        "post-install-cmd": [
+            "mv vendor/bower-asset vendor/bower"
+        ],
+        "post-update-cmd": [
+            "mv vendor/bower-asset vendor/bower"
         ]
     },
     "extra": {

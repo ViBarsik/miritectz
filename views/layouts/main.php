@@ -66,34 +66,10 @@ AppAsset::register($this);
 <?php
     $this->registerJsFile('/js/site.js', ['depends' => [ 'yii\web\JqueryAsset' ] ]);
     $this->endBody();
-
 ?>
 
 <script>
     $(document). ready(function() {
-
-        <?php if(isset($this->context->socketAuthLink) && $this->context->socketAuthLink) : ?>
-            try{
-                socket = io('<?=$this->context->socketAuthLink;?>');
-                socket.emit('open', 'ping');
-                socket.on('open', function(message){
-                    console.log(message);
-                });
-
-                socket.on('selectAnswer', function(data){
-                    Cnvs.socketSelect(data);
-                });
-
-                socket.on('reload', function(message){
-                    console.log(message);
-                    location = '/quiz';
-                });
-
-            } catch (e){
-                console.log("Socket is off on this page!");
-            }
-        <?php endif ?>
-
         <?php if(!empty($flashes = Yii::$app->session->getAllFlashes(true))):
             foreach($flashes as $type=>$message): ?>
                 MessageBox("<?=$type?>", "<?=$message?>");
