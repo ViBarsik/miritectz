@@ -4,6 +4,5 @@ return array (
   'mysql_host' => 'localhost',
   'mysql_database' => 'miritec',
   'mysql_user' => 'miritec',
-  'mysql_password' => 'xxxzzzaaawww',
-  'isInstall' => true,
+  'mysql_password' => 'xxxzzzaaawww'
 );
