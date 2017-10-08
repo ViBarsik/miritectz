@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: CTO
- * Date: 06.10.2017
- * Time: 20:16
- */
-
 namespace app\models\credit;
 
 use Yii;

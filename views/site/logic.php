@@ -1,5 +1,8 @@
 <?php
 /* @var $this yii\web\View */
+/* @var $inputFile string */
+/* @var $outputWordsPositionFile string */
+/* @var $outputCountCharFile string */
 
 use yii\helpers\Html;
 
@@ -19,7 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <h3>Входной файл (/web/logic/input.txt)</h3>
 <div><?=$inputFile?></div>
 
-<h3>Выходной файл (/web/logic/output.txt)</h3>
-<div><?=$outputFile?></div>
+<h3>Выходной файл c заменой по позициям слов (/web/logic/output_count_char.txt)</h3>
+<div><?=$outputWordsPositionFile?></div>
+
+<h3>Выходной файл c заменой по колличеству букв в слове (/web/logic/output_words_position.txt)</h3>
+<div><?=$outputCountCharFile?></div>
 
 
