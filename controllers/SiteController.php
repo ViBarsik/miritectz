@@ -11,10 +11,10 @@ class SiteController extends Controller
 {
     public function beforeAction($action)
     {
-        if(!isset(Yii::$app->params['isInstall']) && $this->action->id !== 'install'){
+        if(!isset(Yii::$app->params['isInstall']) && !in_array($this->action->id, ['index','install'])){
             return $this->redirect('/install');
         }
-        return parent::beforeAction($action);
+        return parent::beforeAction($action); 
     }
 
     public function actionIndex() {
@@ -47,14 +47,17 @@ class SiteController extends Controller
 
 
     public function actionInstall() {
-        $this->layout = 'install';
         if(isset(Yii::$app->params['isInstall'])){
             return $this->redirect('/');
         }
 
         try{
-            Generator::createTables();
-            Generator::updateConfig();
+            if(Generator::createTables() === 2){
+                Generator::updateConfig();
+                Yii::$app->session->setFlash('success', 'База данных создана! Проект готов к работе!');
+            } else {
+                Yii::$app->session->setFlash('danger', 'По какой то причине база данных не была создана. Проверьте правильность выполнения шагов установки!');
+            }           
 
             return $this->redirect('/');
         } catch (\Exception $e) {

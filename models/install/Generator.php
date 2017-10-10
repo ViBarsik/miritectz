@@ -6,7 +6,7 @@ use Yii;
 class Generator
 {
     public static function createTables() {
-        return Yii::$app->db->createCommand("
+        Yii::$app->db->createCommand("
             CREATE TABLE IF NOT EXISTS `credit` (
                 `credit_id` INT(11) NOT NULL AUTO_INCREMENT,
                 `client_id` INT(11) NOT NULL,
@@ -32,6 +32,8 @@ class Generator
                 INDEX `credit_id` (`credit_id`)
             ) COLLATE='utf8_general_ci' ENGINE=InnoDB;            
         ")->execute();
+        
+        return count(Yii::$app->db->createCommand('SHOW TABLES')->queryColumn());
     }
 
     public static function updateConfig () {
