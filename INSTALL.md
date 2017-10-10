@@ -1,4 +1,4 @@
-LogicalQuiz Web Aplication
+Miritec Web Aplication
 ============================
 ### Required software
 
